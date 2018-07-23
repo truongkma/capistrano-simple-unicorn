@@ -42,6 +42,15 @@ namespace :unicorn do
     end
   end
 
+  %w[start stop restart reload].each do |action|
+    desc "#{action} unicorn"
+    task action do
+      on roles :app do
+        sudo :service, fetch(:unicorn_service), action
+      end
+    end
+  end
+
   desc 'restart unicorn'
   task 'restart' do
     on roles :app do

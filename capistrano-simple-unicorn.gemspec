@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
     Support for Ubuntu server and Centos, EC2... server same fedora, .
     This gem customize from https://github.com/bruno-/capistrano-unicorn-nginx
   EOF
-  s.description   = "Capistrano deploy rails app with unicorn zero downtime."
   s.authors       = ["truongkma"]
   s.email         = 'nd.truong1902@gmail.com'
   s.files         = `git ls-files`.split("\n")
