@@ -8,7 +8,7 @@ module Capistrano
       end
 
       def template_to_s template_name
-        config_file = File.join(File.dirname(__FILE__), "../../generators/templates/#{template_name}")
+        config_file = File.join(File.dirname(__FILE__), "../../generators/capistrano/simple_unicorn/templates/#{template_name}")
         ERB.new(File.read(config_file), nil, '-').result(binding)
       end
 
@@ -30,6 +30,14 @@ module Capistrano
 
       def os_is_ubuntu?
         capture(:cat, "/etc/*-release").include? "ubuntu"
+      end
+
+      def nginx_config_file
+        if os_is_ubuntu?
+          "/etc/nginx/sites-available/#{fetch(:nginx_config_name)}.conf"
+        else
+          "/etc/nginx/conf.d/#{fetch(:nginx_config_name)}.conf"
+        end
       end
 
       def unicorn_initd_file
