@@ -54,3 +54,11 @@ Example
 set :unicorn_worker_processes, 4
 set :unicorn_timeout, 60
 ```
+
+## scrip remote
+* start|stop|restart unicron, run:
+```
+$ cap production unicorn:start
+$ cap production unicorn:stop
+$ cap production unicorn:restart
+```
