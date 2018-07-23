@@ -42,7 +42,7 @@ namespace :unicorn do
     end
   end
 
-  %w[start stop restart reload].each do |action|
+  %w[start stop restart upgrade].each do |action|
     desc "#{action} unicorn"
     task action do
       on roles :app do
@@ -52,7 +52,7 @@ namespace :unicorn do
   end
 
   desc 'restart unicorn'
-  task 'restart' do
+  task 'reload' do
     on roles :app do
       invoke "unicorn:unicorn_init" unless file_exists?(unicorn_initd_file)
       invoke 'unicorn:setup_unicorn_config'
@@ -66,5 +66,5 @@ namespace :unicorn do
 end
 
 namespace :deploy do
-  after :publishing, 'unicorn:restart'
+  after :publishing, 'unicorn:reload'
 end
