@@ -6,7 +6,7 @@ require 'capistrano/simple_unicorn/version'
 Gem::Specification.new do |s|
   s.name          = 'capistrano-simple-unicorn'
   s.version       = Capistrano::SimpleUnicorn::VERSION
-  s.date          = '2018-07-20'
+  s.date          = '2018-07-23'
   s.summary       = "Capistrano tasks for automatic and sensible unicorn configuration"
   s.description   = <<-EOF.gsub(/^\s+/, '')
     Capistrano tasks for automatic and sensible unicorn configuration
@@ -17,10 +17,10 @@ Gem::Specification.new do |s|
   EOF
   s.description   = "Capistrano deploy rails app with unicorn zero downtime."
   s.authors       = ["truongkma"]
-  s.email         = 'truong.nd1902@gmail.com'
+  s.email         = 'nd.truong1902@gmail.com'
   s.files         = `git ls-files`.split("\n")
   s.require_paths = ['lib']
-  s.homepage      = 'http://rubygems.org/gems/capistrano-simple-unicorn'
+  s.homepage      = 'https://github.com/truongkma/capistrano-simple-unicorn'
   s.license       = 'MIT'
 
   s.add_runtime_dependency 'capistrano', '~> 3.1'
