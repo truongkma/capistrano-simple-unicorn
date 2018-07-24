@@ -1,4 +1,4 @@
-# Capistrano::SimpleNginx
+# Capistrano::Simple
 Support for Capistrano 3.x
 
 Capistrano task for automatic and unicorn configuration
