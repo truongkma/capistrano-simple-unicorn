@@ -23,16 +23,6 @@ namespace :load do
 end
 
 namespace :unicorn do
-  desc "Unicorn generate config file"
-  task :setup do
-    on roles(fetch(:unicorn_roles)) do
-      unless file_exists? fetch(:unicorn_config_path)
-        execute :mkdir, '-pv', File.dirname(fetch(:unicorn_config_path))
-        upload! template('unicorn.rb.erb'), fetch(:unicorn_config_path)
-      end
-    end
-  end
-
   desc "Start Unicorn"
   task :start do
     on roles(fetch(:unicorn_roles)) do
@@ -107,23 +97,31 @@ namespace :unicorn do
     end
   end
 
-  desc "Add a worker (TTIN)"
-  task :add_worker do
-    on roles(fetch(:unicorn_roles)) do
-      within current_path do
-        info "adding worker"
-        execute :kill, "-s TTIN", pid
-      end
-    end
-  end
+  # desc "Add a worker (TTIN)"
+  # task :add_worker do
+  #   on roles(fetch(:unicorn_roles)) do
+  #     within current_path do
+  #       info "adding worker"
+  #       execute :kill, "-s TTIN", pid
+  #     end
+  #   end
+  # end
 
-  desc "Remove a worker (TTOU)"
-  task :remove_worker do
+  # desc "Remove a worker (TTOU)"
+  # task :remove_worker do
+  #   on roles(fetch(:unicorn_roles)) do
+  #     within current_path do
+  #       info "removing worker"
+  #       execute :kill, "-s TTOU", pid
+  #     end
+  #   end
+  # end
+
+  desc "Unicorn generate config file"
+  task :init_config do
     on roles(fetch(:unicorn_roles)) do
-      within current_path do
-        info "removing worker"
-        execute :kill, "-s TTOU", pid
-      end
+      execute(:mkdir, '-pv', File.dirname(fetch(:unicorn_config_path))) unless file_exists?(fetch(:unicorn_config_file))
+      upload! template('unicorn.rb.erb'), fetch(:unicorn_config_path)
     end
   end
 end
