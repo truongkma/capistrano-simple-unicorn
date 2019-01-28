@@ -11,11 +11,11 @@
 set -e
 HOME=<%= fetch(:user_home_path) %>
 APP_ROOT=<%= current_path %>
-PID=<%= fetch(:unicorn_pid_file) %>
+PID=<%= fetch(:unicorn_pid_path) %>
 USER=<%= fetch(:user) %>
 ENV="<%= fetch(:stage) %>"
 RUBY_VERSION="<%= fetch(:ruby_version) %>"
-CONFIG_FILE="<%= fetch(:unicorn_config_file) %>"
+CONFIG_FILE="<%= fetch(:unicorn_config_path) %>"
 CMD="cd $APP_ROOT && export RBENV_ROOT="$HOME/.rbenv" RBENV_VERSION=$RUBY_VERSION; $HOME/.rbenv/bin/rbenv exec bundle exec unicorn -c $CONFIG_FILE -E $ENV -D"
 
 set -u

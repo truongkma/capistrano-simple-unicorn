@@ -44,15 +44,15 @@ module Capistrano
         "/etc/init.d/#{fetch(:unicorn_service)}"
       end
 
-      def unicorn_sock_file
+      def unicorn_sock_path
         shared_path.join("tmp", "unicorn.sock")
       end
 
-      def unicorn_config_file
+      def unicorn_config_path
         shared_path.join("config", "unicorn.rb")
       end
 
-      def unicorn_pid_file
+      def unicorn_pid_path
         shared_path.join("tmp", "pids", "unicorn.pid")
       end
 

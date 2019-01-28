@@ -1,5 +1,5 @@
 module Capistrano
   module SimpleUnicorn
-    VERSION = '1.0.0'.freeze
+    VERSION = '1.1.4'.freeze
   end
 end

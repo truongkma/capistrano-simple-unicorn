@@ -40,9 +40,9 @@ Default value:
 ```
 set :unicorn_service, -> { "unicorn_#{fetch(:application)}" }
 set :user_home_path, -> { "/home/#{fetch(:user)}" }
-set :unicorn_config_file, -> { shared_path.join("config", "unicorn.rb") }
-set :unicorn_pid_file, -> { shared_path.join("tmp", "pids", "unicorn.pid") }
-set :unicorn_sock_file, -> { shared_path.join("tmp", "unicorn.sock") }
+set :unicorn_config_path, -> { shared_path.join("config", "unicorn.rb") }
+set :unicorn_pid_path, -> { shared_path.join("tmp", "pids", "unicorn.pid") }
+set :unicorn_sock_path, -> { shared_path.join("tmp", "unicorn.sock") }
 set :unicorn_log_file, -> { shaed_path.join("log", "unicorn.stdout.log") }
 set :unicorn_error_log_file, -> {shared_path.join("log","unicorn.stderr.log")}
 set :ruby_version, -> { fetch(:rvm_ruby_version) || fetch(:rbenv_ruby) }
@@ -96,5 +96,5 @@ set :nginx_upstream_file, "/tmp/unicorn.sock"
     set :nginx_fail_timeout, 0
     set :nginx_access_log_file, -> { "/var/log/nginx/#{fetch(:nginx_config_name)}.access.log" } # access log file
     set :nginx_error_log_file, -> { "/var/log/nginx/#{fetch(:nginx_config_name)}.error.log" } # error log file
-    set :nginx_upstream_file, -> { "#{fetch(:unicorn_sock_file)}" } # .sock file path
+    set :nginx_upstream_file, -> { "#{fetch(:unicorn_sock_path)}" } # .sock file path
 ```
