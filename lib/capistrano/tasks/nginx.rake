@@ -10,7 +10,7 @@ namespace :load do
     set :nginx_fail_timeout, 0
     set :nginx_access_log_file, -> { "/var/log/nginx/#{fetch(:nginx_config_name)}.access.log" }
     set :nginx_error_log_file, -> { "/var/log/nginx/#{fetch(:nginx_config_name)}.error.log" }
-    set :nginx_upstream_file, -> { "#{fetch(:unicorn_sock_path)}" }
+    set :nginx_upstream_file, -> { "#{fetch(:unicorn_sock_file)}" }
   end
 end
 

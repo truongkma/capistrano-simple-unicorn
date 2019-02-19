@@ -1,36 +1,26 @@
 worker_processes <%= fetch(:unicorn_worker_processes) %>
 timeout <%= fetch(:unicorn_timeout) %>
-app_path = "<%= fetch(:deploy_to) %>"
-listen "<%= fetch(:unicorn_sock_path) %>"
-pid "<%= fetch(:unicorn_pid_path) %>"
 
-stderr_path "<%= fetch(:unicorn_stderr_path) %>"
-stdout_path "<%= fetch(:unicorn_stdout_path %>"
+listen "<%= fetch(:unicorn_sock_file) %>"
+pid "<%= fetch(:unicorn_pid_file) %>"
 
-preload_app true
-
-# use correct Gemfile on restarts
-before_exec do |server|
-  ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
-end
+stderr_path "<%= fetch(:unicorn_error_log_file) %>"
+stdout_path "<%= fetch(:unicorn_log_file) %>"
 
 preload_app true
 
 before_fork do |server, worker|
-  # the following is highly recomended for Rails + "preload_app true"
-  # as there's no need for the master process to hold a connection
-  if defined?(ActiveRecord::Base)
-    ActiveRecord::Base.connection.disconnect!
-  end
+  defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
 
-  # Before forking, kill the master process that belongs to the .oldbin PID.
-  # This enables 0 downtime deploys.
-  old_pid = "#{server.config[:pid]}.oldbin"
-  if File.exists?(old_pid) && server.pid != old_pid
+  old_pid = "#{ server.config[:pid] }.oldbin"
+  unless old_pid == server.pid
     begin
-      Process.kill("QUIT", File.read(old_pid).to_i)
+      Process.kill :QUIT, File.read(old_pid).to_i
     rescue Errno::ENOENT, Errno::ESRCH
-      # someone else did our job for us
     end
   end
+end
+
+after_fork do |server, worker|
+  defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 end
